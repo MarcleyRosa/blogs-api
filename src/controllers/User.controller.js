@@ -1,6 +1,6 @@
 const { tokenLogin } = require('../middlewares/jwtFunctions');
 require('dotenv/config');
-const { getUser, createUser, requestAllUsers } = require('../services/Users.service');
+const { getUser, createUser, requestAllUsers, requestById } = require('../services/Users.service');
 
 const postLogin = async (req, res) => {
     const { email, password } = req.body;
@@ -30,14 +30,25 @@ const postUser = async (req, res) => {
   }
 };
 
-const getAllUser = async (req, res) => {
+const getAllUser = async (_req, res) => {
   const users = await requestAllUsers();
 
   return res.status(200).json(users);
+};
+
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+
+  const { type, message } = await requestById(id);
+
+  if (type) return res.status(404).json({ message: 'User does not exist' });
+
+  return res.status(200).json(message);
 };
 
 module.exports = {
   postLogin,
   postUser,
   getAllUser,
+  getUserById,
 };

@@ -44,8 +44,21 @@ const requestAllUsers = async () => {
     return withoutPassword;
 };
 
+const requestById = async (id) => {
+    const users = await User.findByPk(id);
+
+    if (!users) return { type: 'Not found', message: users };
+
+    const { password: _, ...userWithoutPassword } = users.dataValues;
+
+    console.log('ssayyyyyyyyyy', userWithoutPassword);
+
+    return { type: null, message: userWithoutPassword };
+};
+
 module.exports = {
     getUser,
     createUser,
     requestAllUsers,
+    requestById,
 };

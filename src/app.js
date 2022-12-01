@@ -1,5 +1,5 @@
 const express = require('express');
-const { postLogin, postUser, getAllUser } = require('./controllers/User.controller');
+const { postLogin, postUser, getAllUser, getUserById } = require('./controllers/User.controller');
 const { middleName, middleDisplayName, middleEmail,
      middlePassword, middleToken } = require('./middlewares/verification');
 
@@ -12,5 +12,7 @@ app.post('/login', middleName, postLogin);
 app.post('/user', middleDisplayName, middlePassword, middleEmail, postUser);
 
 app.get('/user', middleToken, getAllUser);
+
+app.get('/user/:id', middleToken, getUserById);
 
 module.exports = app;
