@@ -17,8 +17,7 @@ const getUser = ({ email, password }) => {
 
 const createUser = async ({ displayName, email, password, image }) => {
     const emais = await User.findAll({ where: { email } });
-    console.log('entreiiiiiicreate');
-    console.log('ppppppppppppppppp', emais);
+
     if (emais.length === 0) {
         console.log('entrei eam');
      return { type: '409', message: 'User already registered' };
@@ -29,10 +28,24 @@ const createUser = async ({ displayName, email, password, image }) => {
 
     const token = jwt.sign({ data: userWithoutPassword }, secret, jwtConfig);
 
-    return { type: null, user, token };
+    return { type: null, user: userWithoutPassword, token };
+};
+
+const requestAllUsers = async () => {
+    const users = await User.findAll({ raw: true });
+
+    const withoutPassword = users.reduce((acc, curr) => {
+        const { password: _, ...userWithoutPassword } = curr;
+
+        acc.push(userWithoutPassword);
+        return acc;
+    }, []);
+
+    return withoutPassword;
 };
 
 module.exports = {
     getUser,
     createUser,
+    requestAllUsers,
 };

@@ -1,4 +1,4 @@
-const { isRequiredString, isDisplayName, isEmail, isPassword } = require('./schema');
+const { isRequiredString, isDisplayName, isEmail, isPassword, isToken } = require('./schema');
 
 const middleName = (req, res, next) => {
     const { password, email } = req.body;
@@ -25,8 +25,6 @@ const middleDisplayName = (req, res, next) => {
 const middleEmail = (req, res, next) => {
   const { email } = req.body;
 
-  // const regex = /^\S+@\S+\.\S+$/;
-  // const validEmail = regex.test(email);
   const { error } = isEmail.validate(email);
   if (error) {
     return res.status(400)
@@ -46,9 +44,22 @@ const middlePassword = (req, res, next) => {
   return next();
 };
 
+const middleToken = (req, res, next) => {
+  const { headers: { authorization } } = req;
+
+  if (!authorization) return res.status(401).json({ message: 'Token not found' });
+
+  const { error } = isToken.validate(authorization);
+
+  if (error) return res.status(401).json({ message: 'Expired or invalid token' });
+
+  return next();
+};
+
 module.exports = {
     middleName,
     middleDisplayName,
     middleEmail,
     middlePassword,
+    middleToken,
 };
