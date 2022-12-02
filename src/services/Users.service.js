@@ -51,8 +51,6 @@ const requestById = async (id) => {
 
     const { password: _, ...userWithoutPassword } = users.dataValues;
 
-    console.log('ssayyyyyyyyyy', userWithoutPassword);
-
     return { type: null, message: userWithoutPassword };
 };
 

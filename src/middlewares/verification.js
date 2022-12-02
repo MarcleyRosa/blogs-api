@@ -1,6 +1,6 @@
 const { isRequiredString, isDisplayName, isEmail, isPassword, isToken } = require('./schema');
 
-const middleName = (req, res, next) => {
+const middleLogin = (req, res, next) => {
     const { password, email } = req.body;
   
     const { error } = isRequiredString.validate(password) || isRequiredString.validate(email);
@@ -56,10 +56,21 @@ const middleToken = (req, res, next) => {
   return next();
 };
 
+const middleName = (req, res, next) => {
+  const { name } = req.body;
+
+  const { error } = isRequiredString.validate(name);
+
+  if (error) return res.status(400).json({ message: '"name" is required' });
+
+  return next();
+};
+
 module.exports = {
-    middleName,
+    middleLogin,
     middleDisplayName,
     middleEmail,
     middlePassword,
     middleToken,
+    middleName,
 };
