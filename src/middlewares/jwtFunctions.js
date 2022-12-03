@@ -1,14 +1,14 @@
 const jwt = require('jsonwebtoken');
 
-const secret = process.env.JWT_SECRET || 'seusecretdetoken';
+const secret = process.env.JWT_SECRET || 'secretJWT';
 
 const jwtConfig = {
-  expiresIn: '15min',
+  expiresIn: '1d',
   algorithm: 'HS256',
 };
 
-const tokenLogin = (autent) => {
-    const token = jwt.sign({ data: autent }, secret, jwtConfig);
+const tokenLogin = (email) => {
+    const token = jwt.sign({ email }, secret, jwtConfig);
     return token;
 };
 
