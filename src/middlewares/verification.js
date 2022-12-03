@@ -1,5 +1,5 @@
 const { isRequiredString, isDisplayName, isEmail, isPassword,
-   isToken, isPost } = require('./schema');
+   isToken, isPost, isUpdatePost } = require('./schema');
 
 const middleLogin = (req, res, next) => {
     const { password, email } = req.body;
@@ -77,6 +77,16 @@ const middlePost = (req, res, next) => {
   return next();
 };
 
+const middleUpdatePost = (req, res, next) => {
+  const { title, content } = req.body;
+
+  const { error } = isUpdatePost.validate({ title, content });
+
+  if (error) return res.status(400).json({ message: 'Some required fields are missing' });
+
+  return next();
+};
+
 module.exports = {
     middleLogin,
     middleDisplayName,
@@ -85,4 +95,5 @@ module.exports = {
     middleToken,
     middleName,
     middlePost,
+    middleUpdatePost,
 };

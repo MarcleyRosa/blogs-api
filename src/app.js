@@ -1,9 +1,10 @@
 const express = require('express');
 const { postCategories, getAllCategories } = require('./controllers/Category.controller');
-const { createPost, getAllPost, getPostById } = require('./controllers/Post.controller');
+const { createPost, getAllPost, getPostById,
+      updatePost } = require('./controllers/Post.controller');
 const { postLogin, postUser, getAllUser, getUserById } = require('./controllers/User.controller');
-const { middleLogin, middleDisplayName, middleEmail,
-     middlePassword, middleToken, middleName, middlePost } = require('./middlewares/verification');
+const { middleLogin, middleDisplayName, middleEmail, middlePassword, middleToken,
+      middleName, middlePost, middleUpdatePost } = require('./middlewares/verification');
 
 const app = express();
 
@@ -26,5 +27,7 @@ app.post('/post', middlePost, middleToken, createPost);
 app.get('/post', middleToken, getAllPost);
 
 app.get('/post/:id', middleToken, getPostById);
+
+app.put('/post/:id', middleToken, middleUpdatePost, updatePost);
 
 module.exports = app;

@@ -12,6 +12,11 @@ const isPost = Joi.object({
     categoryIds: Joi.array().required(),
 });
 
+const isUpdatePost = Joi.object({
+    title: Joi.string().required(),
+    content: Joi.string().required(),
+});
+
 module.exports = {
     isRequiredString,
     isDisplayName,
@@ -19,4 +24,5 @@ module.exports = {
     isPassword,
     isToken,
     isPost,
+    isUpdatePost,
 };

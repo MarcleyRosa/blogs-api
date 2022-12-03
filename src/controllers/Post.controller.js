@@ -1,5 +1,6 @@
 const { verifyToken } = require('../middlewares/jwtFunctions');
-const { createPostService, getPostService, postByIdService } = require('../services/Post.service');
+const { createPostService, getPostService, postByIdService,
+     updatePostService } = require('../services/Post.service');
 
 const createPost = async (req, res) => {
     try {
@@ -30,13 +31,25 @@ const getPostById = async (req, res) => {
 
     if (type) return res.status(+type).json({ message });
 
-    const [result] = message;
+    return res.status(200).json(message);
+};
 
-    return res.status(200).json(result);
+const updatePost = async (req, res) => {
+    const { headers: { authorization } } = req;
+    const { id } = req.params;
+    const { title, content } = req.body;
+    const { email } = verifyToken(authorization);
+
+    const { type, message } = await updatePostService(id, email, title, content);
+
+    if (type) return res.status(+type).json({ message });
+
+    return res.status(200).json(message);
 };
 
 module.exports = {
     createPost,
     getAllPost,
     getPostById,
+    updatePost,
 };
