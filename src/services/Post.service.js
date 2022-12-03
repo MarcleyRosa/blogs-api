@@ -31,7 +31,20 @@ const getPostService = async () => {
     return getAllPostUser;
 };
 
+const postByIdService = async (id) => {
+    const getById = await BlogPost
+    .findAll({ include: [{ model: User, as: 'user', attributes: { exclude: 'password' } },
+     { model: Category, as: 'categories' }] });
+
+    const filter = getById.filter((blog) => blog.id === Number(id));
+
+    if (!filter.length) return { type: '404', message: 'Post does not exist' };
+
+    return { type: null, message: filter };
+};
+
 module.exports = {
     createPostService,
     getPostService,
+    postByIdService,
 };
