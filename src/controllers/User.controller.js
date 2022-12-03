@@ -1,6 +1,6 @@
-const { tokenLogin } = require('../middlewares/jwtFunctions');
+const { tokenLogin, verifyToken } = require('../middlewares/jwtFunctions');
 require('dotenv/config');
-const { getUser, createUser, requestAllUsers, requestById } = require('../services/Users.service');
+const { getUser, createUser, requestAllUsers, requestById, deleteUserService } = require('../services/Users.service');
 
 const postLogin = async (req, res) => {
     const { email, password } = req.body;
@@ -38,7 +38,6 @@ const getAllUser = async (_req, res) => {
 
 const getUserById = async (req, res) => {
   const { id } = req.params;
-
   const { type, message } = await requestById(id);
 
   if (type) return res.status(404).json({ message: 'User does not exist' });
@@ -46,9 +45,19 @@ const getUserById = async (req, res) => {
   return res.status(200).json(message);
 };
 
+const destroyerUser = async (req, res) => {
+  const { headers: { authorization } } = req;
+  const { email } = verifyToken(authorization);
+
+  await deleteUserService(email);
+
+  return res.status(204).end();
+};
+
 module.exports = {
   postLogin,
   postUser,
   getAllUser,
   getUserById,
+  destroyerUser,
 };

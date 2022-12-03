@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 require('dotenv/config');
-const { User } = require('../models');
+const { User, BlogPost } = require('../models');
 
 const secret = process.env.JWT_SECRET;
 
@@ -54,9 +54,18 @@ const requestById = async (id) => {
     return { type: null, message: userWithoutPassword };
 };
 
+const deleteUserService = async (email) => {
+    const [findUser] = await User.findAll({ where: { email }, raw: true });
+
+    const { id } = findUser;
+
+    await BlogPost.destroy({ where: { id } });
+};
+
 module.exports = {
     getUser,
     createUser,
     requestAllUsers,
     requestById,
+    deleteUserService,
 };
