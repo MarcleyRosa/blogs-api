@@ -17,15 +17,21 @@ const createPostService = async ({ title, content, categoryIds, email }) => {
         .create({ postId: blogPost.dataValues.id, categoryId });
         return insert;
     }));
-    const tesss = await PostCategory.findAll({ row: true });
-
-    console.log('asssssssssssss', tesss);
-
-    // await PostCategory.create({ postId: 7, categoryId: 15 });
 
     return { type: null, message: blogPost };
 };
 
+const getPostService = async () => {
+    const getAllPostUser = await BlogPost
+    .findAll({ include: [{ model: User, as: 'user', attributes: { exclude: 'password' } },
+     { model: Category, as: 'categories' }] });
+
+    console.log('asssssssssssss', getAllPostUser);
+
+    return getAllPostUser;
+};
+
 module.exports = {
     createPostService,
+    getPostService,
 };

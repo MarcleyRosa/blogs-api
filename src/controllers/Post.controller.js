@@ -1,5 +1,5 @@
 const { verifyToken } = require('../middlewares/jwtFunctions');
-const { createPostService } = require('../services/Post.service');
+const { createPostService, getPostService } = require('../services/Post.service');
 
 const createPost = async (req, res) => {
     try {
@@ -18,6 +18,15 @@ const createPost = async (req, res) => {
     }
 };
 
+const getAllPost = async (req, res) => {
+    const getPost = await getPostService();
+
+    console.log('controleeeeeeeeeeeeeeeee', getPost);
+
+    return res.status(200).json(getPost);
+};
+
 module.exports = {
     createPost,
+    getAllPost,
 };
