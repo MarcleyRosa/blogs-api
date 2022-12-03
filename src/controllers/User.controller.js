@@ -1,6 +1,7 @@
 const { tokenLogin, verifyToken } = require('../middlewares/jwtFunctions');
 require('dotenv/config');
-const { getUser, createUser, requestAllUsers, requestById, deleteUserService } = require('../services/Users.service');
+const { getUser, createUser, requestAllUsers, requestById,
+   deleteUserService } = require('../services/Users.service');
 
 const postLogin = async (req, res) => {
     const { email, password } = req.body;

@@ -1,7 +1,7 @@
 const express = require('express');
 const { postCategories, getAllCategories } = require('./controllers/Category.controller');
 const { createPost, getAllPost, getPostById, updatePost, 
-      deletePost } = require('./controllers/Post.controller');
+      deletePost, searchPost } = require('./controllers/Post.controller');
 const { postLogin, postUser, getAllUser, getUserById,
      destroyerUser } = require('./controllers/User.controller');
 const { middleLogin, middleDisplayName, middleEmail, middlePassword, middleToken,
@@ -10,6 +10,8 @@ const { middleLogin, middleDisplayName, middleEmail, middlePassword, middleToken
 const app = express();
 
 app.use(express.json());
+
+app.get('/post/search', middleToken, searchPost);
 
 app.post('/login', middleLogin, postLogin);
 

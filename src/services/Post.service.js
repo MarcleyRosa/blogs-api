@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { User, Category, BlogPost, PostCategory } = require('../models');
 const { getById } = require('./querys');
 
@@ -65,10 +66,22 @@ const deletePostService = async (id, email) => {
 
     const { dataValues: { userId } } = findId;
     if (findUser.id !== userId) return { type: '401', message: 'Unauthorized user' };
-    
+
     const del = await BlogPost.destroy({ where: { id } });
 
     return { type: null, message: del };
+};
+
+const searchPostService = async (q) => {
+    const searchs = await BlogPost.findAll({ where: { title: { [Op.like]: `%${q}%` } },
+    include: [{ model: User, as: 'user', attributes: { exclude: 'password' } },
+    { model: Category, as: 'categories' }] });
+
+    console.log('qqqqqqqqqqqqq', q);
+
+    console.log('searchhhhhhhhhhhhhhhhhhhhhhhh', searchs);
+
+    return searchs;
 };
 
 module.exports = {
@@ -77,4 +90,5 @@ module.exports = {
     postByIdService,
     updatePostService,
     deletePostService,
+    searchPostService,
 };

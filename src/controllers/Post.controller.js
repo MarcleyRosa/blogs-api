@@ -1,6 +1,6 @@
 const { verifyToken } = require('../middlewares/jwtFunctions');
-const { createPostService, getPostService, postByIdService,
-     updatePostService, deletePostService } = require('../services/Post.service');
+const { createPostService, getPostService, postByIdService, updatePostService,
+     deletePostService, searchPostService } = require('../services/Post.service');
 
 const createPost = async (req, res) => {
     try {
@@ -60,10 +60,22 @@ const deletePost = async (req, res) => {
     return res.status(204).end();
 };
 
+const searchPost = async (req, res) => {
+    try {
+    const { q } = req.query;
+    const search = await searchPostService(q);
+
+    return res.status(200).json(search);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 module.exports = {
     createPost,
     getAllPost,
     getPostById,
     updatePost,
     deletePost,
+    searchPost,
 };
