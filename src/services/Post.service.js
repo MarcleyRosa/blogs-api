@@ -73,13 +73,11 @@ const deletePostService = async (id, email) => {
 };
 
 const searchPostService = async (q) => {
-    const searchs = await BlogPost.findAll({ where: { title: { [Op.like]: `%${q}%` } },
+    const likes = { [Op.like]: `%${q}%` };
+    const searchs = await BlogPost.findAll({ where: { [Op.or]: [{ title: likes },
+        { content: likes }] },
     include: [{ model: User, as: 'user', attributes: { exclude: 'password' } },
     { model: Category, as: 'categories' }] });
-
-    console.log('qqqqqqqqqqqqq', q);
-
-    console.log('searchhhhhhhhhhhhhhhhhhhhhhhh', searchs);
 
     return searchs;
 };
