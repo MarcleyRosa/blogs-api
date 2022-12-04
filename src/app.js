@@ -1,11 +1,9 @@
 const express = require('express');
 
-const { postLogin } = require('./controllers/User.controller');
+const { postLogin } = require('./controllers');
 const { middleLogin } = require('./middlewares/verification');
 
-const routerUser = require('./routers/User.router');
-const routerPost = require('./routers/Post.router');
-const routerCategory = require('./routers/Category.router');
+const { routerPost, routerUser, routerCategory } = require('./routers');
 
 const app = express();
 

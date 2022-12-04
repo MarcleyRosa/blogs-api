@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { postCategories, getAllCategories } = require('../controllers/Category.controller');
+const { postCategories, getAllCategories } = require('../controllers');
 const { middleToken, middleName } = require('../middlewares/verification');
 
 const router = express.Router();

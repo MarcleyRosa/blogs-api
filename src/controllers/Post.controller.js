@@ -1,6 +1,6 @@
 const { verifyToken } = require('../middlewares/jwtFunctions');
 const { createPostService, getPostService, postByIdService, updatePostService,
-     deletePostService, searchPostService } = require('../services/Post.service');
+    deletePostService, searchPostService } = require('../services');
 
 const createPost = async (req, res) => {
     try {

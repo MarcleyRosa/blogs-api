@@ -1,6 +1,6 @@
 const express = require('express');
 const { postUser, getAllUser, getUserById,
-    destroyerUser } = require('../controllers/User.controller');
+    destroyerUser } = require('../controllers');
 const { middleDisplayName, middleEmail, middlePassword,
     middleToken } = require('../middlewares/verification');
 
