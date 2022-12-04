@@ -1,40 +1,22 @@
 const express = require('express');
-const { postCategories, getAllCategories } = require('./controllers/Category.controller');
-const { createPost, getAllPost, getPostById, updatePost, 
-      deletePost, searchPost } = require('./controllers/Post.controller');
-const { postLogin, postUser, getAllUser, getUserById,
-     destroyerUser } = require('./controllers/User.controller');
-const { middleLogin, middleDisplayName, middleEmail, middlePassword, middleToken,
-      middleName, middlePost, middleUpdatePost } = require('./middlewares/verification');
+
+const { postLogin } = require('./controllers/User.controller');
+const { middleLogin } = require('./middlewares/verification');
+
+const routerUser = require('./routers/User.router');
+const routerPost = require('./routers/Post.router');
+const routerCategory = require('./routers/Category.router');
 
 const app = express();
 
 app.use(express.json());
 
-app.get('/post/search', middleToken, searchPost);
+app.use('/user', routerUser);
+
+app.use('/post', routerPost);
+
+app.use('/categories', routerCategory);
 
 app.post('/login', middleLogin, postLogin);
-
-app.post('/user', middleDisplayName, middlePassword, middleEmail, postUser);
-
-app.get('/user', middleToken, getAllUser);
-
-app.get('/user/:id', middleToken, getUserById);
-
-app.post('/categories', middleToken, middleName, postCategories);
-
-app.get('/categories', middleToken, getAllCategories);
-
-app.post('/post', middlePost, middleToken, createPost);
-
-app.get('/post', middleToken, getAllPost);
-
-app.get('/post/:id', middleToken, getPostById);
-
-app.put('/post/:id', middleToken, middleUpdatePost, updatePost);
-
-app.delete('/post/:id', middleToken, deletePost);
-
-app.delete('/user/me', middleToken, destroyerUser);
 
 module.exports = app;
