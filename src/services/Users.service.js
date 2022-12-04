@@ -18,10 +18,7 @@ const getUser = ({ email, password }) => {
 const createUser = async ({ displayName, email, password, image }) => {
     const emais = await User.findAll({ where: { email } });
 
-    if (emais.length === 0) {
-        console.log('entrei eam');
-     return { type: '409', message: 'User already registered' };
-    }
+    if (emais.length) return { type: '409', message: 'User already registered' };
     
     const user = await User.create({ displayName, email, password, image });
     const { password: _, ...userWithoutPassword } = user.dataValues;
@@ -32,16 +29,16 @@ const createUser = async ({ displayName, email, password, image }) => {
 };
 
 const requestAllUsers = async () => {
-    const users = await User.findAll({ raw: true });
+    const users = await User.findAll({ attributes: { exclude: 'password' } });
 
-    const withoutPassword = users.reduce((acc, curr) => {
-        const { password: _, ...userWithoutPassword } = curr;
+    // const withoutPassword = users.reduce((acc, curr) => {
+    //     const { password: _, ...userWithoutPassword } = curr;
 
-        acc.push(userWithoutPassword);
-        return acc;
-    }, []);
+    //     acc.push(userWithoutPassword);
+    //     return acc;
+    // }, []); excluindo password com reduce
 
-    return withoutPassword;
+    return users;
 };
 
 const requestById = async (id) => {
