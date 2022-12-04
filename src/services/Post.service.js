@@ -6,7 +6,6 @@ const createPostService = async ({ title, content, categoryIds, email }) => {
     const post = await Category.findAndCountAll({ where: { id: categoryIds } });
     const { dataValues: { id } } = await User.findOne({ where: { email }, row: true });
     
-    console.log(post);
     if (post.count !== categoryIds.length) {
         return { type: '400', message: 'one or more "categoryIds" not found' };
     }

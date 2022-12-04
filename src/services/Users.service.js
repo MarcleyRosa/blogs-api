@@ -42,13 +42,11 @@ const requestAllUsers = async () => {
 };
 
 const requestById = async (id) => {
-    const users = await User.findByPk(id);
+    const users = await User.findByPk(id, { attributes: { exclude: 'password' } });
 
     if (!users) return { type: 'Not found', message: users };
 
-    const { password: _, ...userWithoutPassword } = users.dataValues;
-
-    return { type: null, message: userWithoutPassword };
+    return { type: null, message: users };
 };
 
 const deleteUserService = async (email) => {

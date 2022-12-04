@@ -5,8 +5,6 @@ const getById = async (id) => {
     .findByPk(id, { include: [{ model: User, as: 'user', attributes: { exclude: 'password' } },
      { model: Category, as: 'categories' }] });
 
-     console.log('findddddddddddddddddddddddddddd', findId);
-    // const filter = findId.filter((blog) => blog.id === Number(id));
     return findId;
 };
 
