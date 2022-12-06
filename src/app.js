@@ -1,9 +1,6 @@
 const express = require('express');
 
-const { postLogin } = require('./controllers');
-const { middleLogin } = require('./middlewares/verification');
-
-const { routerPost, routerUser, routerCategory } = require('./routers');
+const { routerPost, routerUser, routerCategory, routerLogin } = require('./routers');
 
 require('express-async-errors');
 
@@ -17,7 +14,7 @@ app.use('/post', routerPost);
 
 app.use('/categories', routerCategory);
 
-app.post('/login', middleLogin, postLogin);
+app.use('/', routerLogin);
 
 app.use((error, _req, _res, next) => {
       console.error(error.stack);

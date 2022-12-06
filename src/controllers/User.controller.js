@@ -32,9 +32,12 @@ const postUser = async (req, res) => {
 };
 
 const getAllUser = async (_req, res) => {
+  // try {
   const users = await requestAllUsers();
-
   return res.status(200).json(users);
+  // } catch (error) {
+  //   return res.status(500).json({ message: error });
+  // }
 };
 
 const getUserById = async (req, res) => {
