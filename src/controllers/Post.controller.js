@@ -20,21 +20,30 @@ const createPost = async (req, res) => {
 };
 
 const getAllPost = async (req, res) => {
+    try {
     const getPost = await getPostService();
 
     return res.status(200).json(getPost);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 };
 
 const getPostById = async (req, res) => {
+    try {
     const { id } = req.params;
     const { type, message } = await postByIdService(id);
 
     if (type) return res.status(+type).json({ message });
 
     return res.status(200).json(message);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 };
 
 const updatePost = async (req, res) => {
+    try {
     const { headers: { authorization } } = req;
     const { id } = req.params;
     const { title, content } = req.body;
@@ -45,9 +54,13 @@ const updatePost = async (req, res) => {
     if (type) return res.status(+type).json({ message });
 
     return res.status(200).json(message);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 };
 
 const deletePost = async (req, res) => {
+    try {
     const { id } = req.params;
     const { headers: { authorization } } = req;
 
@@ -58,6 +71,9 @@ const deletePost = async (req, res) => {
     if (type) return res.status(+type).json({ message });
 
     return res.status(204).end();
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 };
 
 const searchPost = async (req, res) => {
