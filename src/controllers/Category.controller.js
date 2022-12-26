@@ -1,7 +1,7 @@
 const { createCategory, requestAllCategories } = require('../services');
 
 const postCategories = async (req, res) => {
-   try {
+  try {
     const { name } = req.body;
     const category = await createCategory(name);
 

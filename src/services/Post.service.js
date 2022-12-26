@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const config = require('../config/config');
-
+  
 const env = process.env.NODE_ENV || 'development';
 
 // const { Op } = require('sequelize');
@@ -13,30 +13,30 @@ const promiseAll = async (categoryIds, blogPost, t) => {
     await Promise.all(categoryIds.map(async (categoryId) => {
         const insert = PostCategory.create({ postId: blogPost.dataValues.id, categoryId },
         { transaction: t });
-     return insert;
+    return insert;
  }));
 };
 
 const createPostService = async ({ title, content, categoryIds, email }) => {
     const t = await sequelize.transaction();
     try {
-    const post = await Category.findAndCountAll({ where: { id: categoryIds } });
+      const post = await Category.findAndCountAll({ where: { id: categoryIds } });
     
-    const { dataValues: { id } } = await User.findOne({ where: { email }, row: true });
-    if (post.count !== categoryIds.length) {
-        return { type: '400', message: 'one or more "categoryIds" not found' };
-    }
-    const param = { title, content, userId: id, published: Date.now(), updated: Date.now() };
-    const blogPost = await BlogPost.create(param, { transaction: t });
-    await promiseAll(categoryIds, blogPost, t);
+      const { dataValues: { id } } = await User.findOne({ where: { email }, row: true });
+      if (post.count !== categoryIds.length) {
+          return { type: '400', message: 'one or more "categoryIds" not found' };
+      }
+      const param = { title, content, userId: id, published: Date.now(), updated: Date.now() };
+      const blogPost = await BlogPost.create(param, { transaction: t });
+      await promiseAll(categoryIds, blogPost, t);
 
-    await t.commit();
-    return { type: null, message: blogPost };
-} catch (e) {
-    await t.rollback();
-    console.log(e);
-    throw e;
-  }
+      await t.commit();
+      return { type: null, message: blogPost };
+    } catch (e) {
+      await t.rollback();
+      console.log(e);
+      throw e;
+    }
 };
 
 const getPostService = async () => {
