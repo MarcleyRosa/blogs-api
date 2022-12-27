@@ -15,7 +15,8 @@ const createPost = async (req, res) => {
     
       return res.status(201).json(message);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.log(error);
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -25,7 +26,8 @@ const getAllPost = async (req, res) => {
 
       return res.status(200).json(getPost);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.log(error);
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -38,7 +40,8 @@ const getPostById = async (req, res) => {
 
       return res.status(200).json(message);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.log(error);
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -55,7 +58,8 @@ const updatePost = async (req, res) => {
 
       return res.status(200).json(message);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.log(error);
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -72,7 +76,8 @@ const deletePost = async (req, res) => {
 
       return res.status(204).end();
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.log(error);
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -83,7 +88,8 @@ const searchPost = async (req, res) => {
 
       return res.status(200).json(search);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.log(error);
+        res.status(500).json({ message: error.message });
     }
 };
 

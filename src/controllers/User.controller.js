@@ -17,7 +17,8 @@ const postLogin = async (req, res) => {
 
     return res.status(200).json({ token });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log(error);
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -30,8 +31,9 @@ const postUser = async (req, res) => {
     if (type) return res.status(409).json({ message: 'User already registered' });
 
     return res.status(201).json({ user, token });
-  } catch (err) {
-    return res.status(500).json({ message: 'Erro interno', error: err.message });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -40,7 +42,8 @@ const getAllUser = async (_req, res) => {
     const users = await requestAllUsers();
     return res.status(200).json(users);  
   } catch (error) {
-    return res.status(500).json({ message: error });
+    console.log(error);
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -53,7 +56,8 @@ const getUserById = async (req, res) => {
 
     return res.status(200).json(message);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log(error);
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -66,7 +70,8 @@ const destroyerUser = async (req, res) => {
 
     return res.status(204).end();
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log(error);
+    res.status(500).json({ message: error.message });
   }
 };
 

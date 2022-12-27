@@ -7,7 +7,8 @@ const postCategories = async (req, res) => {
 
     return res.status(201).json(category);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log(error);
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -17,7 +18,8 @@ const getAllCategories = async (req, res) => {
 
     return res.status(200).json(categories);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log(error);
+    res.status(500).json({ message: error.message });
   }
 };
 
