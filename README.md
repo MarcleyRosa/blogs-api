@@ -1,4 +1,4 @@
-# My Awesome Project
+# My Project Blogs API
 
 # Contexto
 Este projeto trata-se de uma ferramenta 
@@ -19,10 +19,9 @@ npm install
 ``` 
 ## Executando aplicação
 
-* Para rodar o back-end:
+* npm run dev
 
   ```
-  npm run dev
   ```
 
 ## Executando Testes
