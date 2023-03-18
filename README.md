@@ -1,7 +1,7 @@
 # My Project Blogs API
 
 # Contexto
-Este projeto trata-se de uma ferramenta 
+Este projeto trata-se de uma ferramenta para gerenciamento de um blog.
 Provavelmente você já acessou um blog na vida, certo? Este projeto trata-se de uma ferramenta com uma API e um banco de dados para a produção de conteúdo para um blog, seguindo as melhores práticas de desenvolvimento de software!
 
 ## Técnologias usadas
